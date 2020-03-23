@@ -1,12 +1,11 @@
-import Link from 'next/link';
+import MainLayout from '../components/MainLayout';
+import Router from 'next/router';
 
 export default function Index() {
+    // if (!localStorage.getItem('assessmentPortalLogin')) return Router.replace('/login');
     return (
-        <div>
-            <Link href="/about">
-                <a title="About Page">About Page</a>
-            </Link>
-            <p>Hello Next.js</p>
-        </div>
+        <MainLayout>
+            <p>Hello to COVID-19 assessment portal.</p>
+        </MainLayout>
     );
 };
