@@ -1,26 +1,15 @@
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import BodyLayout from './BodyLayout';
+import Copyright from './Copyright';
 
 const rootStyle = {
   margin: "10vh auto",
   padding: "20px",
   width: "500px",
   border: "1px solid #DDD",
-  borderRadius: 10
+  backgroundColor: 'white',
+  borderRadius: 10,
+  boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
 };
 
 const logoContainer = {
@@ -34,15 +23,17 @@ const centerImage = {
 };
 
 const SignUpLoginLayout = props => (
-  <div style={rootStyle}>
-    <div style={logoContainer}>
-      <img src="/assets/logo.png" style={centerImage} />
+  <BodyLayout>
+    <div style={rootStyle}>
+      <div style={logoContainer}>
+        <img src="/assets/logo.png" style={centerImage} />
+      </div>
+      <div>{props.children}</div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
     </div>
-    <div>{props.children}</div>
-    <Box mt={8}>
-      <Copyright />
-    </Box>
-  </div>
+  </BodyLayout>
 );
 
 export default SignUpLoginLayout;

@@ -12,6 +12,8 @@ const ColorButton = withStyles(() => ({
     backgroundColor: bgTransition[0],
     border: '1px solid ' + bgTransition[1],
     borderRadius: '5px',
+    textTransform: 'initial',
+    boxShadow: 'none',
     "&:hover": {
       color: bgTransition[0],
       backgroundColor: bgTransition[1]
