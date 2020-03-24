@@ -8,7 +8,6 @@ const layoutStyle = {
   
   const MainLayout = props => (
     <div style={layoutStyle}>
-      <Header />
       {props.children}
     </div>
   );
