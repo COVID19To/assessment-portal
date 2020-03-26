@@ -42,9 +42,6 @@ export default function Doctor() {
     <SignUpLoginLayout>
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"

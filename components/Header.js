@@ -1,17 +1,32 @@
-import Link from 'next/link';
+import LogoBox from './LogoBox';
+import CustomButton from './CustomButton';
 
-const linkStyle = {
-  marginRight: 15
+const headerBar = {
+  backgroundColor: 'white',
+  maxHeight: '84px',
+};
+
+const headerContainer = {
+  maxWidth: '1300px',
+  margin: '0 auto 20px',
+};
+
+const logoutContainer = {
+  float: 'right',
+  marginTop: '10px',
+};
+
+const buttonStyle = {
+  width: '100px',
+  height: '40px',
 };
 
 const Header = () => (
-  <div>
-    <Link href="/">
-      <a style={linkStyle}>Home</a>
-    </Link>
-    <Link href="/about">
-      <a style={linkStyle}>About</a>
-    </Link>
+  <div style={headerBar}>
+    <div style={headerContainer}>
+      <LogoBox containerStyle={{ display: 'inline-block' }} imageStyle={{ width: '100px', padding: '10px' }} />
+      <div style={logoutContainer}><CustomButton name="Log out" buttonStyle={buttonStyle} onClick={() => 0} /></div>
+    </div>
   </div>
 );
 
