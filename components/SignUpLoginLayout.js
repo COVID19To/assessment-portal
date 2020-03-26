@@ -1,3 +1,4 @@
+// Components
 import Box from "@material-ui/core/Box";
 import BodyLayout from './BodyLayout';
 import Copyright from './Copyright';
@@ -22,13 +23,13 @@ const centerImage = {
   margin: "auto"
 };
 
-const SignUpLoginLayout = props => (
+const SignUpLoginLayout = ({children}) => (
   <BodyLayout>
     <div style={rootStyle}>
       <div style={logoContainer}>
         <img src="/assets/logo.png" style={centerImage} />
       </div>
-      <div>{props.children}</div>
+      <div>{children}</div>
       <Box mt={8}>
         <Copyright />
       </Box>

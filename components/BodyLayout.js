@@ -11,19 +11,20 @@ const themedBackground = {
     zIndex: -1,
 };
 
-const BodyLayout = props => {
-  const content = props.text ? (
+const BodyLayout = ({text, children}) => {
+  const content = text ? (
     <Typography component="h1" align="center" style={{ color: 'white' }}>
-      {props.text}
+      {text}
     </Typography>
   ) : (
     ""
   );
   return (
     <div>
-      {props.children}
+      {children}
       <div style={themedBackground}>{content}</div>
     </div>
   );
 };
+
 export default BodyLayout;
