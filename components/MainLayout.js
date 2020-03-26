@@ -1,3 +1,4 @@
+// Components
 import Header from './Header';
 
 const layoutStyle = {
@@ -5,11 +6,11 @@ const layoutStyle = {
     padding: 20,
     border: '1px solid #DDD'
   };
-  
-  const MainLayout = props => (
+
+  const MainLayout = ({children}) => (
     <div style={layoutStyle}>
-      {props.children}
+      {children}
     </div>
   );
-  
+
   export default MainLayout;
