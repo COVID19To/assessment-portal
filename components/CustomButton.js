@@ -21,12 +21,16 @@ const root = {
 };
 
 const altStyle = {
+  width: "140px",
   backgroundColor: "transparent",
   background: `linear-gradient(90deg, ${altBgTransition[0]} 0%, ${altBgTransition[1]} 100%)`,
   borderWidth: 0,
   borderRadius: "2px",
   color: "white",
+  margin: '5px 0 0 0',
   boxShadow: "0px 2px 2px rgba(25, 148, 115, 0.16)",
+  height: '40px',
+  fontSize: '1.1rem',
   "&:hover": {
     color: "white",
     backgroundColor: altBgTransition[1]
@@ -44,7 +48,7 @@ const defaultClick = href => () => Router.push(href || "/");
 const CustomButton = props => {
   const ColorButton = withStyles(() => ({
     root: Object.assign(root, props.isAlt ? altStyle : {})
-  }))(Button);
+  }))(cProps => <Button {...cProps} />);
   const classes = useStyles();
   return (
     <ColorButton

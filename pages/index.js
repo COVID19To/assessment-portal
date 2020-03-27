@@ -3,13 +3,94 @@ import Typography from "@material-ui/core/Typography";
 import Header from "../components/Header";
 import InvisibleContainer from "../components/InvisibleContainer";
 import CustomButton from "../components/CustomButton";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import { withStyles } from "@material-ui/core/styles";
 
 const textStyle = {
   marginTop: "150px"
 };
 
-export default function Index() {
-  // if (!localStorage.getItem('assessmentPortalLogin')) return Router.replace('/login');
+const titleStyle = {
+  fontWeight: "normal",
+  marginBottom: "20px"
+};
+
+const numberStyle = {
+  fontWeight: "normal",
+  fontSize: "2rem"
+};
+
+const CustomRadio = withStyles({
+  root: {
+    color: "rgba(0, 0, 0, 0.54)",
+    "&$checked": {
+      color: "#653CAD"
+    }
+  },
+  checked: {}
+})(props => <Radio color="default" {...props} />);
+
+const numberContainerStyle = {
+  padding: "2px",
+  display: "inline-block",
+  verticalAlign: "middle"
+};
+
+const contactPatent = number => (
+  <div className="top-section">
+    <Typography component="h2" variant="h6" style={titleStyle}>
+      Contact Patient
+    </Typography>
+    <div className="call-number-container">
+      <div style={numberContainerStyle}>
+        <Typography component="h2" variant="h5" style={numberStyle}>
+          {number}
+        </Typography>
+      </div>
+      <div style={{ float: "right" }}>
+        <CustomButton
+          isAlt={true}
+          onClick={() => 0}
+          style={{ width: "150px", height: "40px" }}
+          name={"Call Patient"}
+        />
+      </div>
+    </div>
+  </div>
+);
+
+const callStatus = () => (
+  <div className="bottom-section">
+    <Typography component="h2" variant="h6" style={titleStyle}>
+      Call Status
+    </Typography>
+    <FormControl component="fieldset" style={{ width: "100%" }}>
+      <RadioGroup
+        row
+        aria-label="call-status"
+        name="call-status"
+        defaultValue="top"
+      >
+        <FormControlLabel
+          value="success"
+          control={<CustomRadio color="primary" />}
+          label="Successfully Connected"
+        />
+        <FormControlLabel
+          value="fail"
+          control={<CustomRadio color="primary" />}
+          label="Unable to Reach"
+          style={{ margin: "0 auto 0 auto" }}
+        />
+      </RadioGroup>
+    </FormControl>
+  </div>
+);
+
+export default function Index({ number, queueLength }) {
   return (
     <BodyLayout
       text={"Thank you! We greatly appreciate your help."}
@@ -18,37 +99,28 @@ export default function Index() {
       <Header />
       <InvisibleContainer>
         <div className="dashboard-box">
-          <div>
-            <Typography
-              component="h2"
-              variant="h6"
-              style={{ fontWeight: "normal" }}
-            >
-              Contact Patient
-            </Typography>
-            <div>
-              <div style={{ display: "inline-block" }}>
-                <Typography
-                  component="h2"
-                  variant="h5"
-                  style={{ fontWeight: "normal" }}
-                >
-                  XXX-YYY-ZZZZ
-                </Typography>
-              </div>
-              <div style={{ float: "right" }}>
-                <CustomButton
-                  isAlt={true}
-                  onClick={() => 0}
-                  style={{ width: "150px", height: "40px" }}
-                  name={"Call Patient"}
-                />
-              </div>
-            </div>
+          <div className="inner-container">
+            {contactPatent(number)}
+            <hr />
+            {callStatus()}
           </div>
         </div>
         <div className="dashboard-box margin">
-          <p>Call next patient.</p>
+          <div className="queue-container">
+            <Typography
+              component="h2"
+              variant="h4"
+              style={{ textAlign: "center" }}
+            >
+              {queueLength} Patients in Queue
+            </Typography>
+            <CustomButton
+              isAlt={false}
+              onClick={() => 0}
+              style={{ width: "250px", margin: '0 auto' }}
+              name={"Show Next Patient"}
+            />
+          </div>
         </div>
       </InvisibleContainer>
       <style jsx>{`
@@ -61,7 +133,19 @@ export default function Index() {
         .dashboard-box.margin {
           margin-top: 60px;
         }
+        .inner-container {
+          padding: 15px;
+        }
+        .call-number-container {
+          height: 50px;
+        }
+        hr {
+          border-top: 1px solid #ddd;
+          margin: 25px 0;
+        }
       `}</style>
     </BodyLayout>
   );
 }
+
+Index.getInitialProps = () => ({ number: "000-000-0000", queueLength: 200 });
