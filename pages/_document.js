@@ -8,11 +8,13 @@ export default class MyDocument extends Document {
       <html lang="en">
         <Head>
           {/* PWA primary color */}
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <link rel="Covid19To Logo" type="image/x-icon" href="favicon.ico" />
         </Head>
         <body>
           <Main />
