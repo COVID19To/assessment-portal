@@ -53,7 +53,12 @@ const contactPatent = number => (
             isAlt={true}
             size="medium"
             onClick={() => 0}
-            style={{ width: "150px", height: "40px", margin: 'auto', display: 'block' }}
+            style={{
+              width: "150px",
+              height: "40px",
+              display: "block",
+              marginTop: "15px"
+            }}
             name={"Call Patient"}
           />
         </div>

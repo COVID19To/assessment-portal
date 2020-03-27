@@ -1,8 +1,10 @@
+import React from "react";
 import Typography from "@material-ui/core/Typography";
+import Hidden from "@material-ui/core/Hidden";
 
 const bodyStyle = {
-  minHeight: '100vh',
-  minWidth: '320px',
+  minHeight: "100vh",
+  minWidth: "320px"
 };
 
 const themedBackground = {
@@ -16,8 +18,8 @@ const themedBackground = {
   zIndex: -1
 };
 
-const textStyle = marginTop => ({
-  fontSize: "2.5rem",
+const textStyle = (marginTop, fontSize) => ({
+  fontSize: fontSize || "2.3rem",
   fontFamily: "Roboto",
   fontWeight: 100,
   color: "white",
@@ -26,9 +28,26 @@ const textStyle = marginTop => ({
 
 const BodyLayout = props => {
   const content = props.text ? (
-    <Typography component="h1" align="center" style={textStyle(props.marginTop)}>
-      {props.text}
-    </Typography>
+    <React.Fragment>
+      <Hidden xsDown>
+        <Typography
+          component="h1"
+          align="center"
+          style={textStyle(props.marginTop)}
+        >
+          {props.text}
+        </Typography>
+      </Hidden>
+      <Hidden smUp>
+        <Typography
+          component="h1"
+          align="center"
+          style={textStyle(props.marginTop, "1.7rem")}
+        >
+          {props.text}
+        </Typography>
+      </Hidden>
+    </React.Fragment>
   ) : (
     ""
   );
