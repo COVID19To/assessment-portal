@@ -1,60 +1,41 @@
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Router from "next/router";
 
 const bgTransition = ["#FFFFFF", "#653CAD"],
   altBgTransition = ["#199473", "#147D64"];
 
-const root = {
-  width: "200px",
-  height: "50px",
-  color: bgTransition[1],
-  backgroundColor: bgTransition[0],
-  border: "1px solid " + bgTransition[1],
-  borderRadius: "5px",
+const buttonStyle = isAlt => ({
+  display: 'block',
+  minWidth: '140px',
+  color: isAlt ? "white" : bgTransition[1],
+  backgroundColor: isAlt ? "transparent" : bgTransition[0],
+  border: isAlt ? "none" : `1px solid ${bgTransition[1]}`,
+  background: isAlt
+    ? `linear-gradient(90deg, ${altBgTransition[0]} 0%, ${altBgTransition[1]} 100%)`
+    : "none",
+  borderRadius: isAlt ? "2px" : "5px",
+  margin: isAlt ? "0 auto" : "15px auto",
   textTransform: "initial",
-  boxShadow: "none",
+  boxShadow: isAlt && "0px 2px 2px rgba(25, 148, 115, 0.16)",
+  fontSize: isAlt && "1.1rem",
   "&:hover": {
-    color: bgTransition[0],
-    backgroundColor: bgTransition[1]
+    color: isAlt ? "white" : bgTransition[0],
+    backgroundColor: isAlt ? altBgTransition[1] : bgTransition[1]
   }
-};
-
-const altStyle = {
-  width: "140px",
-  backgroundColor: "transparent",
-  background: `linear-gradient(90deg, ${altBgTransition[0]} 0%, ${altBgTransition[1]} 100%)`,
-  borderWidth: 0,
-  borderRadius: "2px",
-  color: "white",
-  margin: '5px 0 0 0',
-  boxShadow: "0px 2px 2px rgba(25, 148, 115, 0.16)",
-  height: '40px',
-  fontSize: '1.1rem',
-  "&:hover": {
-    color: "white",
-    backgroundColor: altBgTransition[1]
-  }
-};
-
-const useStyles = makeStyles(theme => ({
-  margin: {
-    margin: theme.spacing(1)
-  }
-}));
+});
 
 const defaultClick = href => () => Router.push(href || "/");
 
 const CustomButton = props => {
   const ColorButton = withStyles(() => ({
-    root: Object.assign(root, props.isAlt ? altStyle : {})
-  }))(cProps => <Button {...cProps} />);
-  const classes = useStyles();
+    root: buttonStyle(props.isAlt)
+  }))(cProps => <Button size={props.size} variant="contained" {...cProps} />);
   return (
     <ColorButton
       variant="contained"
       color="primary"
-      className={classes.margin}
+      className="customer-button"
       onClick={props.onClick || defaultClick(props.href)}
       style={props.buttonStyle || {}}
     >

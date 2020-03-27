@@ -6,8 +6,7 @@ const bodyStyle = {
 };
 
 const themedBackground = {
-  minHeight: '400px',
-  height: "50vh",
+  height: "450px",
   position: "absolute",
   top: 0,
   left: 0,
@@ -17,17 +16,17 @@ const themedBackground = {
   zIndex: -1
 };
 
-const textStyle = {
+const textStyle = marginTop => ({
   fontSize: "2.5rem",
   fontFamily: "Roboto",
   fontWeight: 100,
   color: "white",
-  marginTop: "5vh"
-};
+  marginTop: marginTop || "5vh"
+});
 
 const BodyLayout = props => {
   const content = props.text ? (
-    <Typography component="h1" align="center" style={Object.assign(textStyle, props.textStyle || {})}>
+    <Typography component="h1" align="center" style={textStyle(props.marginTop)}>
       {props.text}
     </Typography>
   ) : (

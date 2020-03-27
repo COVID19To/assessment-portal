@@ -8,10 +8,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
-
-const textStyle = {
-  marginTop: "150px"
-};
+import Hidden from "@material-ui/core/Hidden";
 
 const titleStyle = {
   fontWeight: "normal",
@@ -50,14 +47,28 @@ const contactPatent = number => (
           {number}
         </Typography>
       </div>
-      <div style={{ float: "right" }}>
-        <CustomButton
-          isAlt={true}
-          onClick={() => 0}
-          style={{ width: "150px", height: "40px" }}
-          name={"Call Patient"}
-        />
-      </div>
+      <Hidden smUp>
+        <div>
+          <CustomButton
+            isAlt={true}
+            size="medium"
+            onClick={() => 0}
+            style={{ width: "150px", height: "40px", margin: 'auto', display: 'block' }}
+            name={"Call Patient"}
+          />
+        </div>
+      </Hidden>
+      <Hidden xsDown>
+        <div style={{ float: "right" }}>
+          <CustomButton
+            isAlt={true}
+            size="medium"
+            onClick={() => 0}
+            style={{ width: "150px", height: "40px" }}
+            name={"Call Patient"}
+          />
+        </div>
+      </Hidden>
     </div>
   </div>
 );
@@ -73,28 +84,38 @@ const callStatus = () => (
         aria-label="call-status"
         name="call-status"
         defaultValue="top"
+        style={{ width: "80%" }}
       >
         <FormControlLabel
           value="success"
           control={<CustomRadio color="primary" />}
           label="Successfully Connected"
         />
-        <FormControlLabel
-          value="fail"
-          control={<CustomRadio color="primary" />}
-          label="Unable to Reach"
-          style={{ margin: "0 auto 0 auto" }}
-        />
+        <Hidden smUp>
+          <FormControlLabel
+            value="fail"
+            control={<CustomRadio color="primary" />}
+            label="Unable to Reach"
+          />
+        </Hidden>
+        <Hidden xsDown>
+          <FormControlLabel
+            value="fail"
+            control={<CustomRadio color="primary" />}
+            label="Unable to Reach"
+            style={{ margin: "0 0 0 auto" }}
+          />
+        </Hidden>
       </RadioGroup>
     </FormControl>
   </div>
 );
 
-export default function Index({ number, queueLength }) {
+function Index({ number, queueLength }) {
   return (
     <BodyLayout
       text={"Thank you! We greatly appreciate your help."}
-      textStyle={textStyle}
+      marginTop="150px"
     >
       <Header />
       <InvisibleContainer>
@@ -115,9 +136,9 @@ export default function Index({ number, queueLength }) {
               {queueLength} Patients in Queue
             </Typography>
             <CustomButton
-              isAlt={false}
+              size="large"
               onClick={() => 0}
-              style={{ width: "250px", margin: '0 auto' }}
+              style={{ width: "250px", margin: "0 auto" }}
               name={"Show Next Patient"}
             />
           </div>
@@ -143,9 +164,18 @@ export default function Index({ number, queueLength }) {
           border-top: 1px solid #ddd;
           margin: 25px 0;
         }
+
+        @media (max-width: 600px) {
+          .call-number-container {
+            height: auto;
+            height: fit-content;
+          }
+        }
       `}</style>
     </BodyLayout>
   );
 }
 
 Index.getInitialProps = () => ({ number: "000-000-0000", queueLength: 200 });
+
+export default Index;

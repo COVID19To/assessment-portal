@@ -3,7 +3,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import SignUpLoginLayout from "../components/SignUpLoginLayout";
@@ -70,7 +69,7 @@ export default function Doctor() {
               label="Remember me"
             />
             <div style={centerDiv}>
-              <CustomButton name="Log In" onClick={() => 0} />
+              <CustomButton size="large" name="Log In" onClick={() => 0} />
             </div>
             <Grid container>
               <div

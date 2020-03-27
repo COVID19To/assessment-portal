@@ -9,6 +9,7 @@ const headerBar = {
 const headerContainer = {
   maxWidth: '1300px',
   margin: '0 auto 20px',
+  padding: '0 20px 0 10px'
 };
 
 const logoutContainer = {
