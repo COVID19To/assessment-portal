@@ -1,5 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+
+// Utilities
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Router from "next/router";
 
 const bgTransition = ["#FFFFFF", "#653CAD"],
@@ -39,7 +42,7 @@ const CustomButton = props => {
       onClick={props.onClick || defaultClick(props.href)}
       style={props.buttonStyle || {}}
     >
-      {props.name || ""}
+      {name || ""}
     </ColorButton>
   );
 };

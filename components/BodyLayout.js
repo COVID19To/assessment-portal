@@ -58,4 +58,5 @@ const BodyLayout = props => {
     </div>
   );
 };
+
 export default BodyLayout;
