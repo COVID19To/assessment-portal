@@ -127,15 +127,27 @@ const callStatus = () => (
 );
 
 class Index extends Component {
-  // ({ number, queueLength }) {
+  state = { render: false };
+
   componentDidMount() {
     if(!is_authorized()) {
-      Router.push('/login')
+      Router.replace('/login')
+    }
+    else {
+      this.setState({ render: true });
     }
   }
 
   render() {
     const { number, queueLength } = this.props;
+    const { render } = this.state;
+
+    console.log(render)
+
+    if (!render) {
+      return null;
+    }
+
     return (
       <BodyLayout
         text={"Thank you! We greatly appreciate your help."}

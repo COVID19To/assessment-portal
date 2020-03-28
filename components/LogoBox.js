@@ -7,7 +7,6 @@ const centerImage = () => ({
 
 const LogoBox = props => (
   <div style={props.containerStyle || {}}>
-    {console.log(props.style) || ""}
     <img src="/assets/logo.png" style={Object.assign(centerImage(), props.imageStyle || {})} />
   </div>
 );
