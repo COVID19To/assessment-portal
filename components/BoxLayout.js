@@ -3,7 +3,7 @@ const BoxLayout = props => (
     <div className="box-layout">{props.children}</div>
     <style jsx>{`
       .box-layout {
-        margin: 16vh auto 0;
+        margin: 20vh auto 0;
         padding: 20px;
         max-width: 500px;
         min-width: 280px;

@@ -7,7 +7,7 @@ const bodyStyle = {
   minWidth: "320px"
 };
 
-const themedBackground = {
+const themedBackground = () => ({
   height: "450px",
   position: "absolute",
   top: 0,
@@ -16,14 +16,14 @@ const themedBackground = {
   display: "block",
   background: "linear-gradient(30deg, #421987 50%, #34126F 50%)",
   zIndex: -1
-};
+});
 
 const textStyle = (marginTop, fontSize) => ({
   fontSize: fontSize || "2.3rem",
   fontFamily: "Roboto",
   fontWeight: 100,
   color: "white",
-  marginTop: marginTop || "5vh"
+  marginTop: marginTop || "10vh"
 });
 
 const BodyLayout = props => {
@@ -54,7 +54,7 @@ const BodyLayout = props => {
   return (
     <div style={bodyStyle}>
       {props.children}
-      <div style={themedBackground}>{content}</div>
+      <div style={themedBackground()}>{content}</div>
     </div>
   );
 };
