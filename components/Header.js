@@ -1,8 +1,11 @@
 import LogoBox from "./LogoBox";
 import { GoogleLogout } from "react-google-login";
-import Router from "next/router";
 import { withStyles } from "@material-ui/core/styles";
 import Box from '@material-ui/core/Box';
+
+// Utilities
+import Router from "next/router";
+import {logout} from "../constants/authorization";
 
 const headerBar = {
   backgroundColor: "white",
@@ -62,8 +65,6 @@ const buttonLikeStyle = () => ({
 });
 
 const Header = () => {
-  const logout = () => Router.replace("/login");
-
   const LogOutButtonStyle = withStyles(() => ({
     root: buttonLikeStyle()
   }))(cProps => <Box component="div" display="inline" {...cProps} />);
@@ -81,9 +82,10 @@ const Header = () => {
               <GoogleLogout
                 clientId="13064702254-8jmahupmn4dcoa4vgbg8qhjj737kupm5.apps.googleusercontent.com"
                 buttonText="Logout"
-                onLogoutSuccess={logout}
+                onLogoutSuccess={() => logout()}
                 style={{ backgroundColor: "black" }}
-              ></GoogleLogout>
+              >
+              </GoogleLogout>
             </div>
           </LogOutButtonStyle>
         </div>
