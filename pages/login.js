@@ -1,15 +1,24 @@
+// Components
 import Container from "@material-ui/core/Container";
 import CustomButton from "../components/CustomButton";
 import SignUpLoginLayout from "../components/SignUpLoginLayout";
 import { GoogleLogin } from "react-google-login";
+
+// Utilities
 import Router from "next/router";
+
+// Constants
+import { google_authorization } from "../constants/authorization";
 
 export default function Login() {
   const responseGoogle = response => {
     if (response && response.error) console.error("Invalid Login");
     else {
-      console.log("typeof response", typeof response);
-      console.log("response: ", response && response.error);
+      const {
+        tokenObj: { access_token }
+      } = response;
+      localStorage.setItem(google_authorization.key, access_token);
+
       Router.replace("/");
     }
   };
