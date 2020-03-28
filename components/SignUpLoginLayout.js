@@ -15,7 +15,7 @@ const SignUpLoginLayout = props => {
     <BoxLayout>
       <LogoBox containerStyle={containerStyle} />
       <div>{props.children}</div>
-      <Box mt={8}>
+      <Box mt={6}>
         <Copyright />
       </Box>
     </BoxLayout>
