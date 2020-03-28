@@ -1,3 +1,7 @@
+// Libraries
+import React, {Component} from 'react';
+
+// Component
 import BodyLayout from "../components/BodyLayout";
 import Typography from "@material-ui/core/Typography";
 import Header from "../components/Header";
@@ -9,6 +13,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
+
+// Utilities
+import Router from "next/router";
+
+// Constants
+import {is_authorized} from "../constants/authorization";
 
 const titleStyle = {
   fontWeight: "normal",
@@ -116,69 +126,79 @@ const callStatus = () => (
   </div>
 );
 
-function Index({ number, queueLength }) {
-  return (
-    <BodyLayout
-      text={"Thank you! We greatly appreciate your help."}
-      marginTop="150px"
-    >
-      <Header />
-      <InvisibleContainer>
-        <div className="dashboard-box">
-          <div className="inner-container">
-            {contactPatent(number)}
-            <hr />
-            {callStatus()}
-          </div>
-        </div>
-        <div className="dashboard-box margin">
-          <div className="queue-container">
-            <Typography
-              component="h2"
-              variant="h4"
-              style={{ textAlign: "center" }}
-            >
-              {queueLength} Patients in Queue
-            </Typography>
-            <CustomButton
-              size="large"
-              onClick={() => 0}
-              style={{ width: "250px", margin: "0 auto" }}
-              name={"Show Next Patient"}
-            />
-          </div>
-        </div>
-      </InvisibleContainer>
-      <style jsx>{`
-        .dashboard-box {
-          padding: 20px;
-          border: 1px solid #ddd;
-          background-color: white;
-          border-radius: 10px;
-        }
-        .dashboard-box.margin {
-          margin-top: 60px;
-        }
-        .inner-container {
-          padding: 15px;
-        }
-        .call-number-container {
-          height: 50px;
-        }
-        hr {
-          border-top: 1px solid #ddd;
-          margin: 25px 0;
-        }
+class Index extends Component {
+  // ({ number, queueLength }) {
+  componentDidMount() {
+    if(!is_authorized()) {
+      Router.push('/login')
+    }
+  }
 
-        @media (max-width: 600px) {
-          .call-number-container {
-            height: auto;
-            height: fit-content;
+  render() {
+    const { number, queueLength } = this.props;
+    return (
+      <BodyLayout
+        text={"Thank you! We greatly appreciate your help."}
+        marginTop="150px"
+      >
+        <Header />
+        <InvisibleContainer>
+          <div className="dashboard-box">
+            <div className="inner-container">
+              {contactPatent(number)}
+              <hr />
+              {callStatus()}
+            </div>
+          </div>
+          <div className="dashboard-box margin">
+            <div className="queue-container">
+              <Typography
+                component="h2"
+                variant="h4"
+                style={{ textAlign: "center" }}
+              >
+                {queueLength} Patients in Queue
+              </Typography>
+              <CustomButton
+                size="large"
+                onClick={() => 0}
+                style={{ width: "250px", margin: "0 auto" }}
+                name={"Show Next Patient"}
+              />
+            </div>
+          </div>
+        </InvisibleContainer>
+        <style jsx>{`
+          .dashboard-box {
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 10px;
           }
-        }
-      `}</style>
-    </BodyLayout>
-  );
+          .dashboard-box.margin {
+            margin-top: 60px;
+          }
+          .inner-container {
+            padding: 15px;
+          }
+          .call-number-container {
+            height: 50px;
+          }
+          hr {
+            border-top: 1px solid #ddd;
+            margin: 25px 0;
+          }
+
+          @media (max-width: 600px) {
+            .call-number-container {
+              height: auto;
+              height: fit-content;
+            }
+          }
+        `}</style>
+      </BodyLayout>
+    );
+  }
 }
 
 Index.getInitialProps = () => ({ number: "000-000-0000", queueLength: 200 });
