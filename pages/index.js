@@ -11,9 +11,6 @@ import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 
-// Utilities
-import Router from "next/router";
-
 // Constants
 import { is_authorized, logout } from "../constants/authorization";
 

@@ -1,14 +1,20 @@
-const centerImage = () => ({
-  display: "block",
-  margin: "auto",
-  width: "150px",
-  padding: "20px"
-});
+const centerImage = modifier =>
+  Object.assign(
+    {
+      display: "block",
+      margin: "auto",
+      width: "150px",
+      padding: "20px"
+    },
+    modifier || {}
+  );
 
 const LogoBox = props => (
   <div style={props.containerStyle || {}}>
-    {console.log(props.style) || ""}
-    <img src="/assets/logo.png" style={Object.assign(centerImage(), props.imageStyle || {})} />
+    <img
+      src="/assets/logo.png"
+      style={centerImage(props.imageStyle)}
+    />
   </div>
 );
 
