@@ -142,8 +142,6 @@ class Index extends Component {
     const { number, queueLength } = this.props;
     const { render } = this.state;
 
-    console.log(render)
-
     if (!render) {
       return null;
     }
