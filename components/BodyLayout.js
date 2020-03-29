@@ -26,25 +26,21 @@ const textStyle = (marginTop, fontSize) => ({
   marginTop: marginTop || "10vh"
 });
 
-const BodyLayout = props => {
-  const content = props.text ? (
+const BodyLayout = ({ text, marginTop, children }) => {
+  const content = text ? (
     <React.Fragment>
       <Hidden xsDown>
-        <Typography
-          component="h1"
-          align="center"
-          style={textStyle(props.marginTop)}
-        >
-          {props.text}
+        <Typography component="h1" align="center" style={textStyle(marginTop)}>
+          {text}
         </Typography>
       </Hidden>
       <Hidden smUp>
         <Typography
           component="h1"
           align="center"
-          style={textStyle(props.marginTop, "1.7rem")}
+          style={textStyle(marginTop, "1.7rem")}
         >
-          {props.text}
+          {text}
         </Typography>
       </Hidden>
     </React.Fragment>
@@ -53,7 +49,7 @@ const BodyLayout = props => {
   );
   return (
     <div style={bodyStyle}>
-      {props.children}
+      {children}
       <div style={themedBackground()}>{content}</div>
     </div>
   );
