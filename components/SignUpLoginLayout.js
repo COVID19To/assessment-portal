@@ -10,11 +10,11 @@ const containerStyle = {
   borderBottom: "1px solid rgb(221, 221, 221)"
 };
 
-const SignUpLoginLayout = props => {
+const SignUpLoginLayout = ({ children }) => {
   const box = (
     <BoxLayout>
       <LogoBox containerStyle={containerStyle} />
-      <div>{props.children}</div>
+      <div>{children}</div>
       <Box mt={6}>
         <Copyright />
       </Box>

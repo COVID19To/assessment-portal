@@ -9,12 +9,9 @@ const centerImage = modifier =>
     modifier || {}
   );
 
-const LogoBox = props => (
-  <div style={props.containerStyle || {}}>
-    <img
-      src="/assets/logo.png"
-      style={centerImage(props.imageStyle)}
-    />
+const LogoBox = ({ imageStyle, containerStyle }) => (
+  <div style={containerStyle || {}}>
+    <img src="/assets/logo.png" style={centerImage(imageStyle)} />
   </div>
 );
 
