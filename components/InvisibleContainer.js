@@ -7,6 +7,6 @@ const container = {
   backgroundColor: "transparent"
 };
 
-const invisibleLayout = props => <div style={container}>{props.children}</div>;
+const invisibleLayout = ({ children }) => <div style={container}>{children}</div>;
 
 export default invisibleLayout;

@@ -8,7 +8,7 @@ import { GoogleLogin } from "react-google-login";
 import Router from "next/router";
 
 // Constants
-import { google_authorization } from "../constants/authorization";
+import { authorize } from "../constants/authorization";
 
 export default function Login() {
   const responseGoogle = response => {
@@ -17,8 +17,7 @@ export default function Login() {
       const {
         tokenObj: { access_token }
       } = response;
-      localStorage.setItem(google_authorization.key, access_token);
-
+      authorize(access_token);
       Router.replace("/");
     }
   };
