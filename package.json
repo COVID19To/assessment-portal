@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "deploy": "next build && next start",
+    "export-static": "next build && next export",
     "mock-server": "json-server --watch ./db.json -p 4001 -d 300"
   },
   "keywords": [],
