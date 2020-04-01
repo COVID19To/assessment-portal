@@ -1,8 +1,4 @@
 import fetch from "isomorphic-unfetch";
-import { useEffect } from "react";
-import Router from "next/router";
-import nextCookie from "next-cookies";
-import cookie from "js-cookie";
 
 var emptyPatientInfo = {id:-1, number: "***-***-****", queueLength: 0};
 
