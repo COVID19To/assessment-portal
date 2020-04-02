@@ -21,9 +21,10 @@ module.exports = () => {
                 "phone_number": from_us_to_canadian_phone_number_format(canadian_random_phone_number),
                 "status": "WAITING_CALL",
                 "name":chance.name(),
-                "insertion_time":new Date()
+                "insertion_time":new Date(Date.now() - 1000*60*60*i)
             };
           data.patients.push(patient);
     }
+    data.patients = data.patients.reverse(); //to simulate queue wrt the insertion time
     return data
 }
