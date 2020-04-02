@@ -125,11 +125,11 @@ export default function Index({ initialPatientInfo, token }) {
             row
             aria-label="call-status"
             name="call-status"
-            defaultValue="SUCCESS"
+            defaultValue="CONTACTED"
             style={{ width: "80%" }}
           >
             <FormControlLabel
-              value="SUCCESS"
+              value="CONTACTED"
               control={<CustomRadio color="primary" />}
               label="Successfully Connected"
               onChange={handlePatientStatusChange}
@@ -137,7 +137,7 @@ export default function Index({ initialPatientInfo, token }) {
             />
             <Hidden smUp>
               <FormControlLabel
-                value="FAIL"
+                value="UNABLE_TO_REACH"
                 control={<CustomRadio color="primary" />}
                 label="Unable to Reach"
                 onChange={handlePatientStatusChange}
@@ -145,7 +145,7 @@ export default function Index({ initialPatientInfo, token }) {
             </Hidden>
             <Hidden xsDown>
               <FormControlLabel
-                value="FAIL"
+                value="UNABLE_TO_REACH"
                 control={<CustomRadio color="primary" />}
                 label="Unable to Reach"
                 style={{ margin: "0 0 0 auto" }}
