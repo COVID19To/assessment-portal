@@ -13,7 +13,7 @@ import Hidden from "@material-ui/core/Hidden";
 import {useEffect, useState} from 'react';
 import fetch from "isomorphic-unfetch"
 
-import { callNextPatient, handleCurrentPatient } from "../data/patient-provider";
+import { callNextPatient, updatePatient } from "../data/patient-provider";
 
 // Constants
 import { is_authorized, logout } from "../constants/authorization";
@@ -44,7 +44,7 @@ const numberContainerStyle = {
   verticalAlign: "middle"
 };
 
-const contactPatent = (number, name) => (
+const contactPatent = (phone_number, name) => (
   <div className="top-section">
     <Typography component="h2" variant="h6" style={titleStyle}>
       Contact Patient: {name}
@@ -52,7 +52,7 @@ const contactPatent = (number, name) => (
     <div className="call-number-container">
       <div style={numberContainerStyle}>
         <Typography component="h2" variant="h5" style={numberStyle}>
-          {number}
+          {phone_number}
         </Typography>
       </div>
 
@@ -102,7 +102,8 @@ export default function Index({ initialPatientInfo, token }) {
   const [currentPatientInfo, setCurrentPatientInfo] = useState(initialPatientInfo);
 
   async function  showNextPatient(prevPatient){
-        await handleCurrentPatient(prevPatient);
+        prevPatient.handled_time =  new Date();
+        await updatePatient(prevPatient);
         var nextPatientInfo = await callNextPatient();
         setCurrentPatientInfo(nextPatientInfo);
         console.log(nextPatientInfo);
@@ -165,7 +166,7 @@ export default function Index({ initialPatientInfo, token }) {
       <InvisibleContainer>
         <div className="dashboard-box">
           <div className="inner-container">
-            {contactPatent(currentPatientInfo.patient.number, currentPatientInfo.patient.name)}
+            {contactPatent(currentPatientInfo.patient.phone_number, currentPatientInfo.patient.name)}
             <hr />
             {callStatus()}
           </div>

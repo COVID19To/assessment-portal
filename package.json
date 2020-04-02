@@ -9,7 +9,7 @@
     "start": "next start",
     "deploy": "next build && next start",
     "export-static": "next build && next export",
-    "mock-server": "json-server --watch data/db.js --port 4001 -d 200"
+    "mock-server": "json-server --watch data/db.js --port 4001 -d 200 --id phone_number"
   },
   "keywords": [],
   "author": "",

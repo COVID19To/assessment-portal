@@ -18,11 +18,10 @@ module.exports = () => {
           var us_random_phone_number = chance.phone({ country: "us" });
           var canadian_random_phone_number = from_us_to_canadian_phone_number_format(us_random_phone_number);
           var patient = {
-                "id": i,
-                "number": from_us_to_canadian_phone_number_format(canadian_random_phone_number),
+                "phone_number": from_us_to_canadian_phone_number_format(canadian_random_phone_number),
                 "status": "WAITING_CALL",
                 "name":chance.name(),
-
+                "insertion_time":new Date()
             };
           data.patients.push(patient);
     }
