@@ -95,24 +95,34 @@ const contactPatent = (phone_number, name) => (
 
 
 export default function Index({ initialPatientInfo, token }) {
-  if (!token) {
-    logout();
-    return <div></div>;
-  }
-  const [currentPatientInfo, setCurrentPatientInfo] = useState(initialPatientInfo);
+    if (!token) {
+      logout();
+      return <div></div>;
+    }
+    const [currentPatientInfo, setCurrentPatientInfo] = useState(initialPatientInfo);
+    const [radioButtonValue, setRadioButtonValue] = useState(null);
 
-  async function  showNextPatient(prevPatient){
+    async function  showNextPatient(prevPatient){
+        console.log("show next patient");
         prevPatient.handled_time =  new Date();
         await updatePatient(prevPatient);
         var nextPatientInfo = await callNextPatient();
+        await pickPatient(nextPatientInfo.patient);
         setCurrentPatientInfo(nextPatientInfo);
-        console.log(nextPatientInfo);
+        setRadioButtonValue(null);
+    }
+
+    async function  pickPatient(patient){
+        console.log("pick patient");
+        patient.status = "PICKED";
+        patient.picked_time =  new Date();
+        updatePatient(patient);
     }
 
     async function  handlePatientStatusChange(changeEvent){
         currentPatientInfo.patient.status  = changeEvent.target.value;
+        setRadioButtonValue(changeEvent.target.value);
         console.log("Patient status changed:");
-        console.log(currentPatientInfo);
   }
 
     const callStatus = () => (
@@ -125,22 +135,20 @@ export default function Index({ initialPatientInfo, token }) {
             row
             aria-label="call-status"
             name="call-status"
-            defaultValue="CONTACTED"
+            value={radioButtonValue}
+            onChange={handlePatientStatusChange}
             style={{ width: "80%" }}
           >
             <FormControlLabel
               value="CONTACTED"
               control={<CustomRadio color="primary" />}
               label="Successfully Connected"
-              onChange={handlePatientStatusChange}
-              defaultChecked
             />
             <Hidden smUp>
               <FormControlLabel
                 value="UNABLE_TO_REACH"
                 control={<CustomRadio color="primary" />}
                 label="Unable to Reach"
-                onChange={handlePatientStatusChange}
               />
             </Hidden>
             <Hidden xsDown>
@@ -149,7 +157,6 @@ export default function Index({ initialPatientInfo, token }) {
                 control={<CustomRadio color="primary" />}
                 label="Unable to Reach"
                 style={{ margin: "0 0 0 auto" }}
-                onChange={handlePatientStatusChange}
               />
             </Hidden>
           </RadioGroup>
@@ -224,6 +231,5 @@ export default function Index({ initialPatientInfo, token }) {
 Index.getInitialProps = async () => {
   const token = is_authorized();
   var nextPatientInfo = await callNextPatient();
-  console.log(nextPatientInfo);
   return { initialPatientInfo: nextPatientInfo, token };
 };
