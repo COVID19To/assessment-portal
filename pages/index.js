@@ -10,6 +10,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
+import {useEffect, useState} from 'react';
+import fetch from "isomorphic-unfetch"
+
+import { callNextPatient, updatePatient } from "../data/patient-provider";
 
 // Constants
 import { is_authorized, logout } from "../constants/authorization";
@@ -40,17 +44,18 @@ const numberContainerStyle = {
   verticalAlign: "middle"
 };
 
-const contactPatent = number => (
+const contactPatent = (phone_number, name) => (
   <div className="top-section">
     <Typography component="h2" variant="h6" style={titleStyle}>
-      Contact Patient
+      Contact Patient: {name}
     </Typography>
     <div className="call-number-container">
       <div style={numberContainerStyle}>
         <Typography component="h2" variant="h5" style={numberStyle}>
-          {number}
+          {phone_number}
         </Typography>
       </div>
+
       <Hidden smUp>
         <div>
           <CustomButton
@@ -79,52 +84,86 @@ const contactPatent = number => (
         </div>
       </Hidden>
     </div>
+
   </div>
 );
 
-const callStatus = () => (
-  <div className="bottom-section">
-    <Typography component="h2" variant="h6" style={titleStyle}>
-      Call Status
-    </Typography>
-    <FormControl component="fieldset" style={{ width: "100%" }}>
-      <RadioGroup
-        row
-        aria-label="call-status"
-        name="call-status"
-        defaultValue="top"
-        style={{ width: "80%" }}
-      >
-        <FormControlLabel
-          value="success"
-          control={<CustomRadio color="primary" />}
-          label="Successfully Connected"
-        />
-        <Hidden smUp>
-          <FormControlLabel
-            value="fail"
-            control={<CustomRadio color="primary" />}
-            label="Unable to Reach"
-          />
-        </Hidden>
-        <Hidden xsDown>
-          <FormControlLabel
-            value="fail"
-            control={<CustomRadio color="primary" />}
-            label="Unable to Reach"
-            style={{ margin: "0 0 0 auto" }}
-          />
-        </Hidden>
-      </RadioGroup>
-    </FormControl>
-  </div>
-);
 
-export default function Index({ number, queueLength, token }) {
-  if (!token) {
-    logout();
-    return <div></div>;
+
+
+
+
+
+export default function Index({ initialPatientInfo, token }) {
+    if (!token) {
+      logout();
+      return <div></div>;
+    }
+    const [currentPatientInfo, setCurrentPatientInfo] = useState(initialPatientInfo);
+    const [radioButtonValue, setRadioButtonValue] = useState(null);
+
+    async function  showNextPatient(prevPatient){
+        console.log("show next patient");
+        prevPatient.handled_time =  new Date();
+        await updatePatient(prevPatient);
+        var nextPatientInfo = await callNextPatient();
+        await pickPatient(nextPatientInfo.patient);
+        setCurrentPatientInfo(nextPatientInfo);
+        setRadioButtonValue(null);
+    }
+
+    async function  pickPatient(patient){
+        console.log("pick patient");
+        patient.status = "PICKED";
+        patient.picked_time =  new Date();
+        updatePatient(patient);
+    }
+
+    async function  handlePatientStatusChange(changeEvent){
+        currentPatientInfo.patient.status  = changeEvent.target.value;
+        setRadioButtonValue(changeEvent.target.value);
+        console.log("Patient status changed:");
   }
+
+    const callStatus = () => (
+      <div className="bottom-section">
+        <Typography component="h2" variant="h6" style={titleStyle}>
+          Call Status
+        </Typography>
+        <FormControl component="fieldset" style={{ width: "100%" }}>
+          <RadioGroup
+            row
+            aria-label="call-status"
+            name="call-status"
+            value={radioButtonValue}
+            onChange={handlePatientStatusChange}
+            style={{ width: "80%" }}
+          >
+            <FormControlLabel
+              value="CONTACTED"
+              control={<CustomRadio color="primary" />}
+              label="Successfully Connected"
+            />
+            <Hidden smUp>
+              <FormControlLabel
+                value="UNABLE_TO_REACH"
+                control={<CustomRadio color="primary" />}
+                label="Unable to Reach"
+              />
+            </Hidden>
+            <Hidden xsDown>
+              <FormControlLabel
+                value="UNABLE_TO_REACH"
+                control={<CustomRadio color="primary" />}
+                label="Unable to Reach"
+                style={{ margin: "0 0 0 auto" }}
+              />
+            </Hidden>
+          </RadioGroup>
+        </FormControl>
+      </div>
+    );
+
   return (
     <BodyLayout
       text={"Thank you! We greatly appreciate your help."}
@@ -134,7 +173,7 @@ export default function Index({ number, queueLength, token }) {
       <InvisibleContainer>
         <div className="dashboard-box">
           <div className="inner-container">
-            {contactPatent(number)}
+            {contactPatent(currentPatientInfo.patient.phone_number, currentPatientInfo.patient.name)}
             <hr />
             {callStatus()}
           </div>
@@ -146,11 +185,11 @@ export default function Index({ number, queueLength, token }) {
               variant="h4"
               style={{ textAlign: "center" }}
             >
-              {queueLength} Patients in Queue
+              {currentPatientInfo.queueLength} Patients in Queue
             </Typography>
             <CustomButton
               size="large"
-              onClick={() => 0}
+              onClick={() => showNextPatient(currentPatientInfo.patient)}
               style={{ width: "250px", margin: "0 auto" }}
               name={"Show Next Patient"}
             />
@@ -191,5 +230,6 @@ export default function Index({ number, queueLength, token }) {
 
 Index.getInitialProps = async () => {
   const token = is_authorized();
-  return { number: "000-000-0000", queueLength: 200, token };
+  var nextPatientInfo = await callNextPatient();
+  return { initialPatientInfo: nextPatientInfo, token };
 };
