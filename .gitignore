@@ -2,3 +2,4 @@ node_modules
 .vscode
 .next
 dev.js
+.env
